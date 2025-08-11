@@ -1,0 +1,99 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>石头剪刀布</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #score {
+            margin-top: 15px;
+            font-size: 18px;
+            background: rgba(255,255,255,0.6);
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>石头 ✊ 剪刀 ✌ 布 ✋</h1>
+    <p>选择一个出招：</p>
+    <button onclick="play('石头')">石头 ✊</button>
+    <button onclick="play('剪刀')">剪刀 ✌</button>
+    <button onclick="play('布')">布 ✋</button>
+    <button onclick="resetGame()">🔄 重置分数</button>
+
+    <div id="result"></div>
+    <div id="score">玩家分数：0 | 电脑分数：0</div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function play(playerChoice) {
+            const choices = ['石头', '剪刀', '布'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let result = '';
+
+            if (playerChoice === computerChoice) {
+                result = '平局！你们都出了 ' + playerChoice;
+            } else if (
+                (playerChoice === '石头' && computerChoice === '剪刀') ||
+                (playerChoice === '剪刀' && computerChoice === '布') ||
+                (playerChoice === '布' && computerChoice === '石头')
+            ) {
+                result = `你赢了！你出了 ${playerChoice}，电脑出了 ${computerChoice}`;
+                playerScore++;
+            } else {
+                result = `你输了！你出了 ${playerChoice}，电脑出了 ${computerChoice}`;
+                computerScore++;
+            }
+
+            document.getElementById('result').innerText = result;
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('score').innerText =
+                `玩家分数：${playerScore} | 电脑分数：${computerScore}`;
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            document.getElementById('result').innerText = '';
+            updateScore();
+        }
+    </script>
+</body>
+</html>
